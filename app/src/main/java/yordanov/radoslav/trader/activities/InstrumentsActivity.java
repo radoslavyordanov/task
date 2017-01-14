@@ -81,11 +81,13 @@ public class InstrumentsActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.addIntrument:
-                Intent openAddInstruments = new Intent(InstrumentsActivity.this, AddInstrumentsActivity.class);
+                Intent openAddInstruments = new Intent(InstrumentsActivity.this,
+                        AddInstrumentsActivity.class);
                 startActivity(openAddInstruments);
                 return true;
             case R.id.logout:
-                SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences appPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(this);
                 appPreferences.edit().putLong(Constants.USER_ID_PREF, -1).apply();
                 appPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF, false).apply();
                 Intent openLoginActivity = new Intent(this, LoginActivity.class);

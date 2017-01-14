@@ -3,14 +3,9 @@ package yordanov.radoslav.trader.models;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import yordanov.radoslav.trader.AppDatabase;
-
-/**
- * Created by Radi on 1/14/2017.
- */
 
 @Table(database = AppDatabase.class)
 public class Instrument extends BaseModel {

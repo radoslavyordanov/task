@@ -2,10 +2,6 @@ package yordanov.radoslav.trader;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 
-/**
- * Created by Radi on 1/14/2017.
- */
-
 @Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
 public class AppDatabase {
 

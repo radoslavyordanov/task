@@ -4,10 +4,6 @@ import yordanov.radoslav.trader.models.FavouriteInstruments;
 import yordanov.radoslav.trader.models.Instrument;
 import yordanov.radoslav.trader.models.User;
 
-/**
- * Created by Radi on 1/14/2017.
- */
-
 public class Constants {
     public static final String USER_ID_PREF = "USER_ID";
     public static final String REMEMBER_ME_PREF = "REMEMBER_ME";

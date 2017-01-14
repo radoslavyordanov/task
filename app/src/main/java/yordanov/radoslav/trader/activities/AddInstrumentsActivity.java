@@ -9,11 +9,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.raizlabs.android.dbflow.sql.language.CursorResult;
-import com.raizlabs.android.dbflow.sql.language.NameAlias;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.sql.language.property.PropertyFactory;
 import com.raizlabs.android.dbflow.sql.queriable.StringQuery;
-import com.raizlabs.android.dbflow.structure.BaseQueryModel;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
 import java.util.ArrayList;
@@ -110,6 +106,7 @@ public class AddInstrumentsActivity extends AppCompatActivity {
             favouriteInstrument.save();
         }
         Intent openAddInstruments = new Intent(AddInstrumentsActivity.this, InstrumentsActivity.class);
+        openAddInstruments.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(openAddInstruments);
         finish();
     }

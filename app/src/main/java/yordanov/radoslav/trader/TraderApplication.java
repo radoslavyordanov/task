@@ -17,13 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import yordanov.radoslav.trader.models.FavouriteInstruments;
 import yordanov.radoslav.trader.models.Instrument;
 import yordanov.radoslav.trader.models.User;
-
-/**
- * Created by Radi on 1/14/2017.
- */
 
 public class TraderApplication extends Application {
     @Override
@@ -68,6 +63,11 @@ public class TraderApplication extends Application {
                             user.setEmail("test@test.com");
                             user.setPassword("test");
                             user.save();
+
+                            User user1 = new User();
+                            user1.setEmail("admin@admin.com");
+                            user1.setPassword("admin");
+                            user1.save();
                         }
                     }
                 }).execute();

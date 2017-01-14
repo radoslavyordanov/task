@@ -7,10 +7,6 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import yordanov.radoslav.trader.AppDatabase;
 
-/**
- * Created by Radi on 1/14/2017.
- */
-
 @Table(database = AppDatabase.class)
 public class FavouriteInstruments extends BaseModel {
     @PrimaryKey

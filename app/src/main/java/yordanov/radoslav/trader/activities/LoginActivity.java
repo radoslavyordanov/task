@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                             Intent intent = new Intent(LoginActivity.this, InstrumentsActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             showInvalidCredentialsDialog();
                         }
