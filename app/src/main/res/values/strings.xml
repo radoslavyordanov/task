@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Trader</string>
+
+    <!-- Login Activity -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="rememberMe">Remember me</string>
+    <string name="login">Login</string>
+    <string name="error">Error</string>
+    <string name="invalidCredentials">\nInvalid Credentials, please try again.</string>
+
+    <!-- Instruments Adapter -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="removeInstrumentTitle">Confirmation</string>
+    <string name="removeInstrumentDesc">Are you sure you want to remove this instrument?</string>
+    <item name="instrumentIdTag" type="id" />
+    <item name="positionTag" type="id" />
+
+    <!-- Instruments menu -->
+    <string name="add">Add</string>
+    <string name="logout">Logout</string>
+
+    <!-- Add Instruments menu -->
+    <string name="done">Done</string>
+</resources>
