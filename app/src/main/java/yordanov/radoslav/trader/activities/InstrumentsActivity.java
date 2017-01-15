@@ -38,6 +38,8 @@ public class InstrumentsActivity extends AppCompatActivity {
         setContentView(R.layout.instruments_activity);
 
         initListView();
+
+        setTitle(getString(R.string.instruments));
     }
 
     private void initListView() {
@@ -79,7 +81,7 @@ public class InstrumentsActivity extends AppCompatActivity {
     private void updateAllPrices() {
         ArrayList<Instrument> items = mApdater.getItems();
 
-        for (int i = 0; i <  mApdater.getCount(); i++) {
+        for (int i = 0; i < mApdater.getCount(); i++) {
             generateRandomPrice(items.get(i));
         }
     }

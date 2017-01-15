@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Trader</string>
+    <string name="instruments">Instruments</string>
+    <string name="addInstruments">Add Instruments</string>
 
     <!-- Login Activity -->
     <string name="email">Email</string>

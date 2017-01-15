@@ -30,7 +30,10 @@ public class AddInstrumentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_instruments_activity);
+
         initListView();
+
+        setTitle(getString(R.string.addInstruments));
     }
 
     @SuppressWarnings("unchecked")
@@ -86,10 +89,15 @@ public class AddInstrumentsActivity extends AppCompatActivity {
             favouriteInstrument.setInstrumentId(selectedInstrumentIDs.get(i));
             favouriteInstrument.save();
         }
-        Intent openAddInstruments = new Intent(AddInstrumentsActivity.this,
-                InstrumentsActivity.class);
-        openAddInstruments.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(openAddInstruments);
-        finish();
+
+        if (selectedInstrumentIDs.size() == 0) {
+            onBackPressed();
+        } else {
+            Intent openAddInstruments = new Intent(AddInstrumentsActivity.this,
+                    InstrumentsActivity.class);
+            openAddInstruments.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(openAddInstruments);
+            finish();
+        }
     }
 }
