@@ -12,7 +12,7 @@
     <string name="invalidCredentials">\nInvalid credentials, please try again.</string>
 
     <!-- Instruments Activity -->
-    <string name="loggoutDesc">Are you sure you want to logout?</string>
+    <string name="logoutDesc">Are you sure you want to logout?</string>
 
     <!-- Instruments Adapter -->
     <string name="yes">Yes</string>

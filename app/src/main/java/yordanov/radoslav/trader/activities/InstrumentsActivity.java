@@ -178,7 +178,7 @@ public class InstrumentsActivity extends AppCompatActivity {
     private void showLogoutDialog() {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.confirmation))
-                .setMessage(getString(R.string.loggoutDesc))
+                .setMessage(getString(R.string.logoutDesc))
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences appPreferences =
