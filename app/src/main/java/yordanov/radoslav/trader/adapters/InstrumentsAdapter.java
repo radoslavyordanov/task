@@ -16,6 +16,7 @@ import com.raizlabs.android.dbflow.sql.language.CursorResult;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import yordanov.radoslav.trader.Constants;
@@ -25,9 +26,11 @@ import yordanov.radoslav.trader.models.FavouriteInstruments_Table;
 import yordanov.radoslav.trader.models.Instrument;
 
 public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View.OnClickListener {
+    private ArrayList<Instrument> mItems = new ArrayList<>();
 
     public InstrumentsAdapter(Context context, ArrayList<Instrument> instruments) {
         super(context, 0, instruments);
+        mItems = instruments;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
 
         // Populate the data into the template view using the data object
         holder.name.setText(instrument.getName());
-        holder.price.setText(String.valueOf(instrument.getHighestPrice()));
+        holder.price.setText(instrument.getCurrentPrice());
         holder.delete.setTag(R.id.instrumentIdTag, instrument.getId());
         holder.delete.setTag(R.id.positionTag, position);
 
@@ -102,6 +105,10 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public ArrayList<Instrument> getItems() {
+        return mItems;
     }
 
     private static class ViewHolder {

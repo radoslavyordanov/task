@@ -22,6 +22,9 @@ public class Instrument extends BaseModel {
     private double highestPrice;
 
     @Column
+    private String currentPrice;
+
+    @Column
     private int decimalNumbers;
 
     public long getId() {
@@ -50,6 +53,14 @@ public class Instrument extends BaseModel {
 
     public void setHighestPrice(double highestPrice) {
         this.highestPrice = highestPrice;
+    }
+
+    public String getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(String currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public int getDecimalNumbers() {
