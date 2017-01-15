@@ -106,7 +106,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
     private void showDeleteDialog(final long id, final int position) {
         Resources res = getContext().getResources();
         new AlertDialog.Builder(getContext())
-                .setTitle(res.getString(R.string.removeInstrumentTitle))
+                .setTitle(res.getString(R.string.confirmation))
                 .setMessage(res.getString(R.string.removeInstrumentDesc))
                 .setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

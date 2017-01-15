@@ -1,9 +1,11 @@
 package yordanov.radoslav.trader.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -101,6 +103,10 @@ public class InstrumentsActivity extends AppCompatActivity {
     private void updatePrices() {
         ArrayList<Instrument> items = mApdater.getItems();
 
+        if (items.size() == 0) {
+            return;
+        }
+
         int subsetOfInstruments = getSubsetOfInstruments(items.size());
 
         ArrayList<Integer> listOfIntegers = generateListOfIntegers(items.size());
@@ -162,17 +168,36 @@ public class InstrumentsActivity extends AppCompatActivity {
                 startActivity(openAddInstruments);
                 return true;
             case R.id.logout:
-                SharedPreferences appPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(this);
-                appPreferences.edit().putLong(Constants.USER_ID_PREF, -1).apply();
-                appPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF, false).apply();
-                Intent openLoginActivity = new Intent(this, LoginActivity.class);
-                startActivity(openLoginActivity);
-                finish();
+                showLogoutDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showLogoutDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.confirmation))
+                .setMessage(getString(R.string.loggoutDesc))
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences appPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(InstrumentsActivity.this);
+                        appPreferences.edit().putLong(Constants.USER_ID_PREF, -1).apply();
+                        appPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF, false).apply();
+                        Intent openLoginActivity = new Intent(InstrumentsActivity.this, LoginActivity.class);
+                        startActivity(openLoginActivity);
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private class RepeatingThread implements Runnable {

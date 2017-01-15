@@ -11,10 +11,13 @@
     <string name="error">Error</string>
     <string name="invalidCredentials">\nInvalid credentials, please try again.</string>
 
+    <!-- Instruments Activity -->
+    <string name="loggoutDesc">Are you sure you want to logout?</string>
+
     <!-- Instruments Adapter -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="removeInstrumentTitle">Confirmation</string>
+    <string name="confirmation">Confirmation</string>
     <string name="removeInstrumentDesc">Are you sure you want to remove this instrument?</string>
     <item name="instrumentIdTag" type="id" />
     <item name="positionTag" type="id" />
