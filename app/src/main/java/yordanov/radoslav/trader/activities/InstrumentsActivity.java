@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.raizlabs.android.dbflow.sql.language.NameAlias;
@@ -30,7 +32,7 @@ import yordanov.radoslav.trader.models.Instrument_Table;
 import yordanov.radoslav.trader.models.User;
 import yordanov.radoslav.trader.models.User_Table;
 
-public class InstrumentsActivity extends AppCompatActivity {
+public class InstrumentsActivity extends AppCompatActivity implements View.OnClickListener {
     private InstrumentsAdapter mApdater;
     private RepeatingThread mRepeatingThread;
 
@@ -42,6 +44,10 @@ public class InstrumentsActivity extends AppCompatActivity {
         initListView();
 
         setTitle(getString(R.string.instruments));
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.bringToFront();
+        fab.setOnClickListener(this);
     }
 
     private void initListView() {
@@ -161,17 +167,11 @@ public class InstrumentsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.addIntrument:
-                Intent openAddInstruments = new Intent(InstrumentsActivity.this,
-                        AddInstrumentsActivity.class);
-                startActivity(openAddInstruments);
-                return true;
-            case R.id.logout:
-                showLogoutDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.logout) {
+            showLogoutDialog();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -198,6 +198,13 @@ public class InstrumentsActivity extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent openAddInstruments = new Intent(InstrumentsActivity.this,
+                AddInstrumentsActivity.class);
+        startActivity(openAddInstruments);
     }
 
     private class RepeatingThread implements Runnable {
