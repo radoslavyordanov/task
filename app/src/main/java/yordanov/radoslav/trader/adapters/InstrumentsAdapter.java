@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ import com.raizlabs.android.dbflow.sql.language.CursorResult;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import yordanov.radoslav.trader.Constants;
@@ -59,13 +59,41 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
         Instrument instrument = getItem(position);
 
         // Populate the data into the template view using the data object
-        holder.name.setText(instrument.getName());
-        holder.price.setText(instrument.getCurrentPrice());
-        holder.delete.setTag(R.id.instrumentIdTag, instrument.getId());
-        holder.delete.setTag(R.id.positionTag, position);
+        if (instrument != null) {
+            holder.name.setText(instrument.getName());
 
+            updatePriceBackground(holder.price, instrument.getCurrentPrice());
+
+            holder.delete.setTag(R.id.instrumentIdTag, instrument.getId());
+            holder.delete.setTag(R.id.positionTag, position);
+        }
         // Return the completed view to render on screen
         return view;
+    }
+
+    private void updatePriceBackground(TextView priceTV, String currentPriceStr) {
+        double oldPrice, currentPrice;
+        try {
+            oldPrice = Double.parseDouble(priceTV.getText().toString());
+            currentPrice = Double.parseDouble(currentPriceStr);
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        if (oldPrice == 0) {
+            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
+                    R.drawable.rounded_bg_grey));
+        } else if (currentPrice > oldPrice) {
+            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
+                    R.drawable.rounded_bg_green));
+        } else if (currentPrice < oldPrice) {
+            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
+                    R.drawable.rounded_bg_red));
+        } else {
+            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
+                    R.drawable.rounded_bg_grey));
+        }
+        priceTV.setText(currentPriceStr);
     }
 
     @Override
@@ -84,7 +112,8 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
                     public void onClick(DialogInterface dialog, int which) {
                         // Delete using query
                         SQLite.delete(FavouriteInstruments.class)
-                                .where(FavouriteInstruments_Table.userId_id.eq(Constants.CURRENT_USER_ID))
+                                .where(FavouriteInstruments_Table.userId_id
+                                        .eq(Constants.CURRENT_USER_ID))
                                 .and(FavouriteInstruments_Table.instrumentId_id.eq(id))
                                 .async()
                                 .queryResultCallback(new QueryTransaction.QueryResultCallback<FavouriteInstruments>() {

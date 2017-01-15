@@ -33,20 +33,6 @@ public class TraderApplication extends Application {
     private void createDB() {
         insertUsers();
         insertInstruments();
-
-
-
-   /*     SQLite.select()
-                .from(FavouriteInstruments.class)
-                .async()
-                .queryResultCallback(new QueryTransaction.QueryResultCallback<FavouriteInstruments>() {
-                    @Override
-                    public void onQueryResult(QueryTransaction<FavouriteInstruments> transaction, @NonNull CursorResult<FavouriteInstruments> tResult) {
-                        // called when query returns on UI thread
-                        List<FavouriteInstruments> users = tResult.toListClose();
-                        users.size();
-                    }
-                }).execute();*/
     }
 
     private void insertUsers() {

@@ -46,6 +46,7 @@ public class InstrumentsActivity extends AppCompatActivity {
         List<Instrument> favouriteInstruments = getFavouriteInstruments();
         mApdater = new InstrumentsAdapter(InstrumentsActivity.this,
                 new ArrayList<>(favouriteInstruments));
+        updateAllPrices();
         listView.setAdapter(mApdater);
         if (favouriteInstruments.size() > 1) {
             mRepeatingThread = new RepeatingThread();
@@ -73,6 +74,14 @@ public class InstrumentsActivity extends AppCompatActivity {
                 .on(User_Table.id.withTable().eq(FavouriteInstruments_Table.userId_id))
                 .where(User_Table.id.withTable(userAlias).eq(Constants.CURRENT_USER_ID))
                 .queryList();
+    }
+
+    private void updateAllPrices() {
+        ArrayList<Instrument> items = mApdater.getItems();
+
+        for (int i = 0; i <  mApdater.getCount(); i++) {
+            generateRandomPrice(items.get(i));
+        }
     }
 
     /**
@@ -178,7 +187,7 @@ public class InstrumentsActivity extends AppCompatActivity {
         @Override
         public void run() {
             updatePrices();
-            mHandler.postDelayed(this, 1000);
+            mHandler.postDelayed(this, 3000);
         }
     }
 

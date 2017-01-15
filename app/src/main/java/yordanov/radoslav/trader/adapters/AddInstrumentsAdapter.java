@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import yordanov.radoslav.trader.R;
 import yordanov.radoslav.trader.models.Instrument;
 
-public class AddInstrumentsAdapter extends ArrayAdapter<Instrument> implements CompoundButton.OnCheckedChangeListener {
-    private ArrayList<Long> mSelectedInstruments = new ArrayList<Long>();
+public class AddInstrumentsAdapter extends ArrayAdapter<Instrument> implements
+        CompoundButton.OnCheckedChangeListener {
+    private ArrayList<Long> mSelectedInstruments = new ArrayList<>();
 
     public AddInstrumentsAdapter(Context context, ArrayList<Instrument> instruments) {
         super(context, 0, instruments);
@@ -46,9 +47,10 @@ public class AddInstrumentsAdapter extends ArrayAdapter<Instrument> implements C
         Instrument instrument = getItem(position);
 
         // Populate the data into the template view using the data object
-        holder.name.setText(instrument.getName());
-        holder.checkBox.setTag(instrument.getId());
-
+        if (instrument != null) {
+            holder.name.setText(instrument.getName());
+            holder.checkBox.setTag(instrument.getId());
+        }
         // Return the completed view to render on screen
         return view;
     }

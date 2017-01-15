@@ -37,25 +37,6 @@ public class AddInstrumentsActivity extends AppCompatActivity {
     private void initListView() {
         final ListView listView = (ListView) findViewById(R.id.addInstrumentsListView);
 
-    /*    SQLite.select()
-                .from(Instrument.class)
-                .where(Instrument_Table.id.is(
-                        PropertyFactory.from(SQLite.select(FavouriteInstruments_Table.instrumentId_id)
-                                .from(FavouriteInstruments.class)
-                                .where(FavouriteInstruments_Table.userId_id.eq(Constants.CURRENT_USER_ID))
-                        )))
-                .async()
-                .queryResultCallback(new QueryTransaction.QueryResultCallback<Instrument>() {
-                    @Override
-                    public void onQueryResult(QueryTransaction<Instrument> transaction, @NonNull CursorResult<Instrument> tResult) {
-                        // called when query returns on UI thread
-                        List<Instrument> instruments = tResult.toListClose();
-                        mAdapter = new AddInstrumentsAdapter(AddInstrumentsActivity.this, new ArrayList<>(instruments));
-                        listView.setAdapter(mAdapter);
-                    }
-                }).execute();*/
-
-
         StringQuery instrumentQuery = new StringQuery(
                 Instrument.class,
                 "SELECT " + Instrument_Table.name + ", " + Instrument_Table.id
@@ -105,7 +86,8 @@ public class AddInstrumentsActivity extends AppCompatActivity {
             favouriteInstrument.setInstrumentId(selectedInstrumentIDs.get(i));
             favouriteInstrument.save();
         }
-        Intent openAddInstruments = new Intent(AddInstrumentsActivity.this, InstrumentsActivity.class);
+        Intent openAddInstruments = new Intent(AddInstrumentsActivity.this,
+                InstrumentsActivity.class);
         openAddInstruments.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(openAddInstruments);
         finish();

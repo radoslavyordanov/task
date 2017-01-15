@@ -7,7 +7,7 @@
     <string name="rememberMe">Remember me</string>
     <string name="login">Login</string>
     <string name="error">Error</string>
-    <string name="invalidCredentials">\nInvalid Credentials, please try again.</string>
+    <string name="invalidCredentials">\nInvalid credentials, please try again.</string>
 
     <!-- Instruments Adapter -->
     <string name="yes">Yes</string>
