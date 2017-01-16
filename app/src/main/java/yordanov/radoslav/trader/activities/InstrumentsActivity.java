@@ -230,7 +230,7 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
         @Override
         public void run() {
             updatePrices();
-            mHandler.postDelayed(this, 3000);
+            mHandler.postDelayed(this, Constants.UPDATE_INTERVAL);
         }
     }
 
