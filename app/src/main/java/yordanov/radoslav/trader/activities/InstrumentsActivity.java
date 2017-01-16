@@ -20,6 +20,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import yordanov.radoslav.trader.Constants;
 import yordanov.radoslav.trader.R;
@@ -151,7 +152,8 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
         double minimum = instrument.getLowestPrice();
         double maximum = instrument.getHighestPrice();
 
-        double randomPrice = (Math.random() * maximum) + minimum;
+        Random r = new Random();
+        double randomPrice = minimum + (maximum - minimum) * r.nextDouble();
         int decimalNumbers = instrument.getDecimalNumbers();
 
         instrument.setCurrentPrice(priceFormatter(decimalNumbers, randomPrice));
