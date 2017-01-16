@@ -45,7 +45,7 @@ public class TraderApplication extends Application {
                                               @NonNull CursorResult<User> tResult) {
                         // called when query returns on UI thread
                         List<User> users = tResult.toListClose();
-                        if (users.size() == 0) {
+                        if (users.isEmpty()) {
                             User user = new User();
                             user.setEmail("test@test.com");
                             user.setPassword("test");
@@ -70,7 +70,7 @@ public class TraderApplication extends Application {
                                               @NonNull CursorResult<Instrument> tResult) {
                         // called when query returns on UI thread
                         List<Instrument> instruments = tResult.toListClose();
-                        if (instruments.size() == 0) {
+                        if (instruments.isEmpty()) {
                             insertInstrumentsFromJSON();
                         }
                     }

@@ -113,7 +113,7 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
     private void updatePrices() {
         ArrayList<Instrument> items = mAdapter.getItems();
 
-        if (items.size() == 0) {
+        if (items.isEmpty()) {
             return;
         }
 

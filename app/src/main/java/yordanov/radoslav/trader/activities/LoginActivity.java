@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         List<User> users = tResult.toListClose();
                         if (users.size() == 1) {
                             Constants.CURRENT_USER_ID = users.get(0).getId();
-                            if (mRememberMeCheckBox.isEnabled()) {
+                            if (mRememberMeCheckBox.isChecked()) {
                                 mAppPreferences.edit().putLong(Constants.USER_ID_PREF,
                                         Constants.CURRENT_USER_ID).apply();
                                 mAppPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF,

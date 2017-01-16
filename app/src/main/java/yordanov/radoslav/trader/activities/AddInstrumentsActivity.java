@@ -90,7 +90,7 @@ public class AddInstrumentsActivity extends AppCompatActivity {
             favouriteInstrument.save();
         }
 
-        if (selectedInstrumentIDs.size() == 0) {
+        if (selectedInstrumentIDs.isEmpty()) {
             onBackPressed();
         } else {
             Intent openAddInstruments = new Intent(AddInstrumentsActivity.this,

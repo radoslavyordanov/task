@@ -81,7 +81,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
             return;
         }
 
-        if (oldPrice == 0) {
+        if (oldPrice == 0 || oldPrice == currentPrice) {
             priceTV.setBackground(ContextCompat.getDrawable(getContext(),
                     R.drawable.rounded_bg_grey));
         } else if (currentPrice > oldPrice) {
@@ -90,9 +90,6 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
         } else if (currentPrice < oldPrice) {
             priceTV.setBackground(ContextCompat.getDrawable(getContext(),
                     R.drawable.rounded_bg_red));
-        } else {
-            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
-                    R.drawable.rounded_bg_grey));
         }
         priceTV.setText(currentPriceStr);
     }
