@@ -17,4 +17,8 @@ public class Constants {
     public static final String INSTRUMENTS_DATA = "instruments.json";
 
     public static final int UPDATE_INTERVAL = 3000;
+
+    private Constants() {
+
+    }
 }

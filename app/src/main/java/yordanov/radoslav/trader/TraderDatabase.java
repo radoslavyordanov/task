@@ -8,5 +8,9 @@ public class TraderDatabase {
     public static final String NAME = "TraderDatabase"; // we will add the .db extension
 
     public static final int VERSION = 1;
+
+    private TraderDatabase() {
+        
+    }
 }
 

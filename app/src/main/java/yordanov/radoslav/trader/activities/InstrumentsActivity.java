@@ -98,37 +98,6 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    /**
-     * Here is the logic for updating the prices.
-     * First we get a random number between 1 and the maximum user's
-     * favourite instruments. We use this number later in the for loop.
-     * After that we create a range list of integers between 0 and the
-     * maximum user's favourite instruments. We shuffle the list of integers.
-     * Then we iterate through the instruments list.
-     * Every iteration of the for loop gets a random number from the
-     * list of integers. The maximum iteration of the instruments is the random
-     * number that we generated in the beginning. This way we only randomize
-     * subset of the user instruments.
-     */
-    private void updatePrices() {
-        ArrayList<Instrument> items = mAdapter.getItems();
-
-        if (items.isEmpty()) {
-            return;
-        }
-
-        int subsetOfInstruments = getSubsetOfInstruments(items.size());
-
-        ArrayList<Integer> listOfIntegers = generateListOfIntegers(items.size());
-        Collections.shuffle(listOfIntegers);
-
-        for (int i = 0; i < subsetOfInstruments; i++) {
-            int randomInstrumentPosition = listOfIntegers.get(i);
-            generateRandomPrice(items.get(randomInstrumentPosition));
-        }
-        mAdapter.notifyDataSetChanged();
-    }
-
     private int getSubsetOfInstruments(int maximum) {
         int randomNum;
         int minimum = 1;
@@ -233,6 +202,37 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
         public void run() {
             updatePrices();
             mHandler.postDelayed(this, Constants.UPDATE_INTERVAL);
+        }
+
+        /**
+         * Here is the logic for updating the prices.
+         * First we get a random number between 1 and the maximum user's
+         * favourite instruments. We use this number later in the for loop.
+         * After that we create a range list of integers between 0 and the
+         * maximum user's favourite instruments. We shuffle the list of integers.
+         * Then we iterate through the instruments list.
+         * Every iteration of the for loop gets a random number from the
+         * list of integers. The maximum iteration of the instruments is the random
+         * number that we generated in the beginning. This way we only randomize
+         * subset of the user instruments.
+         */
+        private void updatePrices() {
+            ArrayList<Instrument> items = mAdapter.getItems();
+
+            if (items.isEmpty()) {
+                return;
+            }
+
+            int subsetOfInstruments = getSubsetOfInstruments(items.size());
+
+            ArrayList<Integer> listOfIntegers = generateListOfIntegers(items.size());
+            Collections.shuffle(listOfIntegers);
+
+            for (int i = 0; i < subsetOfInstruments; i++) {
+                int randomInstrumentPosition = listOfIntegers.get(i);
+                generateRandomPrice(items.get(randomInstrumentPosition));
+            }
+            mAdapter.notifyDataSetChanged();
         }
     }
 

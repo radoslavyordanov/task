@@ -73,7 +73,8 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
     }
 
     private void updatePriceBackground(TextView priceTV, String currentPriceStr) {
-        double oldPrice, currentPrice;
+        double oldPrice;
+        double currentPrice;
         try {
             oldPrice = Double.parseDouble(priceTV.getText().toString());
             currentPrice = Double.parseDouble(currentPriceStr);
@@ -87,7 +88,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
         } else if (currentPrice > oldPrice) {
             priceTV.setBackground(ContextCompat.getDrawable(getContext(),
                     R.drawable.rounded_bg_green));
-        } else if (currentPrice < oldPrice) {
+        } else {
             priceTV.setBackground(ContextCompat.getDrawable(getContext(),
                     R.drawable.rounded_bg_red));
         }
