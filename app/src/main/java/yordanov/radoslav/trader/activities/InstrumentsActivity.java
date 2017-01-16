@@ -98,25 +98,6 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private int getSubsetOfInstruments(int maximum) {
-        int randomNum;
-        int minimum = 1;
-
-        int range = (maximum - minimum) + 1;
-        randomNum = (int) (Math.random() * range) + minimum;
-
-        return randomNum;
-    }
-
-    private ArrayList<Integer> generateListOfIntegers(int max) {
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < max; i++) {
-            list.add(i);
-        }
-
-        return list;
-    }
-
     private void generateRandomPrice(Instrument instrument) {
         double minimum = instrument.getLowestPrice();
         double maximum = instrument.getHighestPrice();
@@ -233,6 +214,25 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
                 generateRandomPrice(items.get(randomInstrumentPosition));
             }
             mAdapter.notifyDataSetChanged();
+        }
+
+        private int getSubsetOfInstruments(int maximum) {
+            int randomNum;
+            int minimum = 1;
+
+            int range = (maximum - minimum) + 1;
+            randomNum = (int) (Math.random() * range) + minimum;
+
+            return randomNum;
+        }
+
+        private ArrayList<Integer> generateListOfIntegers(int max) {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = 0; i < max; i++) {
+                list.add(i);
+            }
+
+            return list;
         }
     }
 
