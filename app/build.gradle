@@ -1,6 +1,29 @@
 apply plugin: 'com.android.application'
+apply plugin: "org.sonarqube"
+sonarqube {
+    properties {
+        property "sonar.projectName", "Trader"
+        property "sonar.projectKey", "Trader"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.sources", "."
+        property "sonar.exclusions", "build/**,**/*.png"
+        property "sonar.import_unknown_files", true
+        property "sonar.language", "java"
+        property "sonar.profile", "Android Lint"
+        property "sonar.android.lint.report", "build/outputs/lint-results-debug.xml"
+    }
+}
 
 android {
+    lintOptions {
+        // set to true to turn off analysis progress reporting by lint
+        quiet false
+        // if true, stop the gradle build if errors are found
+        abortOnError false
+        // if true, only report errors
+        ignoreWarnings false
+    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
