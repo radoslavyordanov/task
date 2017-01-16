@@ -1,92 +1,92 @@
 [
   {
-    instrumentName: "Gold",
-    lowestPrice: 1135.32,
-    highestPrice: 1142.95,
-    decimalNumbers: 2
+    "name": "Gold",
+    "lowestPrice": 1135.32,
+    "highestPrice": 1142.95,
+    "decimalNumbers": 2
   },
   {
-    instrumentName: "MasterCard",
-    lowestPrice: 102.1,
-    highestPrice: 105.8,
-    decimalNumbers: 1
+    "name": "MasterCard",
+    "lowestPrice": 102.1,
+    "highestPrice": 105.8,
+    "decimalNumbers": 1
   },
   {
-    instrumentName: "EUR/USD",
-    lowestPrice: 1.04321,
-    highestPrice: 1.04365,
-    decimalNumbers: 5
+    "name": "EUR/USD",
+    "lowestPrice": 1.04321,
+    "highestPrice": 1.04365,
+    "decimalNumbers": 5
   },
   {
-    instrumentName: "$UK100",
-    lowestPrice: 7014.8,
-    highestPrice: 7019.6,
-    decimalNumbers: 1
+    "name": "$UK100",
+    "lowestPrice": 7014.8,
+    "highestPrice": 7019.6,
+    "decimalNumbers": 1
   },
   {
-    instrumentName: "BMW",
-    lowestPrice: 88.5,
-    highestPrice: 92.3,
-    decimalNumbers: 1
+    "name": "BMW",
+    "lowestPrice": 88.5,
+    "highestPrice": 92.3,
+    "decimalNumbers": 1
   },
   {
-    instrumentName: "$US30",
-    lowestPrice: 19899,
-    highestPrice: 19905,
-    decimalNumbers: 0
+    "name": "$US30",
+    "lowestPrice": 19899,
+    "highestPrice": 19905,
+    "decimalNumbers": 0
   },
   {
-    instrumentName: "Barclays",
-    lowestPrice: 2.2181,
-    highestPrice: 2.2248,
-    decimalNumbers: 4
+    "name": "Barclays",
+    "lowestPrice": 2.2181,
+    "highestPrice": 2.2248,
+    "decimalNumbers": 4
   },
   {
-    instrumentName: "Bitcoin",
-    lowestPrice: 776.03,
-    highestPrice: 783.93,
-    decimalNumbers: 2
+    "name": "Bitcoin",
+    "lowestPrice": 776.03,
+    "highestPrice": 783.93,
+    "decimalNumbers": 2
   },
   {
-    instrumentName: "VW",
-    lowestPrice: 130.10,
-    highestPrice: 134.80,
-    decimalNumbers: 2
+    "name": "VW",
+    "lowestPrice": 130.10,
+    "highestPrice": 134.80,
+    "decimalNumbers": 2
   },
   {
-    instrumentName: "$SWISS20",
-    lowestPrice: 8228.3,
-    highestPrice: 8237.8,
-    decimalNumbers: 1
+    "name": "$SWISS20",
+    "lowestPrice": 8228.3,
+    "highestPrice": 8237.8,
+    "decimalNumbers": 1
   },
   {
-    instrumentName: "Alcoa",
-    lowestPrice: 27.365,
-    highestPrice: 30.584,
-    decimalNumbers: 3
+    "name": "Alcoa",
+    "lowestPrice": 27.365,
+    "highestPrice": 30.584,
+    "decimalNumbers": 3
   },
   {
-    instrumentName: "$NDAQ100",
-    lowestPrice: 4956.4,
-    highestPrice: 4961.6,
-    decimalNumbers: 1
+    "name": "$NDAQ100",
+    "lowestPrice": 4956.4,
+    "highestPrice": 4961.6,
+    "decimalNumbers": 1
   },
   {
-    instrumentName: "$ITALIAN40",
-    lowestPrice: 18949,
-    highestPrice: 18968,
-    decimalNumbers: 0
+    "name": "$ITALIAN40",
+    "lowestPrice": 18949,
+    "highestPrice": 18968,
+    "decimalNumbers": 0
   },
   {
-    instrumentName: "AberdeenAM",
-    lowestPrice: 2.5350,
-    highestPrice: 2.5620,
-    decimalNumbers: 4
+    "name": "AberdeenAM",
+    "lowestPrice": 2.5350,
+    "highestPrice": 2.5620,
+    "decimalNumbers": 4
   },
   {
-    instrumentName: "Apple",
-    lowestPrice: 116.15,
-    highestPrice: 120.64,
-    decimalNumbers: 2
+    "name": "Apple",
+    "lowestPrice": 116.15,
+    "highestPrice": 120.64,
+    "decimalNumbers": 2
   }
 ]

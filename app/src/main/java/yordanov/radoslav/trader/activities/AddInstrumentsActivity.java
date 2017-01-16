@@ -29,7 +29,7 @@ public class AddInstrumentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_instruments_activity);
+        setContentView(R.layout.activity_add_instruments);
 
         initListView();
 
@@ -95,7 +95,8 @@ public class AddInstrumentsActivity extends AppCompatActivity {
         } else {
             Intent openAddInstruments = new Intent(AddInstrumentsActivity.this,
                     InstrumentsActivity.class);
-            openAddInstruments.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            openAddInstruments.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(openAddInstruments);
             finish();
         }

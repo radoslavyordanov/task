@@ -13,4 +13,6 @@ public class Constants {
     public static final String FAVOURITE_INSTRUMENTS_TABLE = FavouriteInstruments.class.getSimpleName();
     public static final String INSTRUMENT_TABLE = Instrument.class.getSimpleName();
     public static final String USER_TABLE = User.class.getSimpleName();
+
+    public static final String INSTRUMENTS_DATA = "instruments.json";
 }

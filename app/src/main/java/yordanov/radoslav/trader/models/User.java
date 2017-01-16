@@ -6,9 +6,9 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import yordanov.radoslav.trader.AppDatabase;
+import yordanov.radoslav.trader.TraderDatabase;
 
-@Table(database = AppDatabase.class)
+@Table(database = TraderDatabase.class)
 public class User extends BaseModel {
     @PrimaryKey(autoincrement = true)
     long id; // package-private recommended, not required

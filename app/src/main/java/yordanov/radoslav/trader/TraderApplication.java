@@ -41,7 +41,8 @@ public class TraderApplication extends Application {
                 .async()
                 .queryResultCallback(new QueryTransaction.QueryResultCallback<User>() {
                     @Override
-                    public void onQueryResult(QueryTransaction<User> transaction, @NonNull CursorResult<User> tResult) {
+                    public void onQueryResult(QueryTransaction<User> transaction,
+                                              @NonNull CursorResult<User> tResult) {
                         // called when query returns on UI thread
                         List<User> users = tResult.toListClose();
                         if (users.size() == 0) {
@@ -65,7 +66,8 @@ public class TraderApplication extends Application {
                 .async()
                 .queryResultCallback(new QueryTransaction.QueryResultCallback<Instrument>() {
                     @Override
-                    public void onQueryResult(QueryTransaction<Instrument> transaction, @NonNull CursorResult<Instrument> tResult) {
+                    public void onQueryResult(QueryTransaction<Instrument> transaction,
+                                              @NonNull CursorResult<Instrument> tResult) {
                         // called when query returns on UI thread
                         List<Instrument> instruments = tResult.toListClose();
                         if (instruments.size() == 0) {
@@ -84,28 +86,29 @@ public class TraderApplication extends Application {
 
                 // Create a new instrument object and insert it in the DB
                 Instrument instrument = new Instrument();
-                instrument.setName(instrumentsObject.getString("instrumentName"));
+                instrument.setName(instrumentsObject.getString("name"));
                 instrument.setLowestPrice(instrumentsObject.getDouble("lowestPrice"));
                 instrument.setHighestPrice(instrumentsObject.getDouble("highestPrice"));
                 instrument.setDecimalNumbers(instrumentsObject.getInt("decimalNumbers"));
                 instrument.save();
             }
         } catch (JSONException e) {
-
+            // parse error
         }
     }
 
     private String loadJSONFromAsset() {
-        String json;
+        String json = null;
         try {
-            InputStream is = getAssets().open("instruments.json");
+            InputStream is = getAssets().open(Constants.INSTRUMENTS_DATA);
             int size = is.available();
             byte[] buffer = new byte[size];
-            is.read(buffer);
+            int bytesRead = is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            if (bytesRead > 0) {
+                json = new String(buffer, "UTF-8");
+            }
         } catch (IOException ex) {
-            ex.printStackTrace();
             return null;
         }
         return json;

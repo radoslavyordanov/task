@@ -33,26 +33,27 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
         mItems = instruments;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
-        View view = convertView;
         // Check if an existing view is being reused, otherwise inflate the view
-        if (view == null) {
+        if (convertView == null) {
             LayoutInflater inflater =
                     (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(
-                    R.layout.instruments_row,
-                    null
+            convertView = inflater.inflate(
+                    R.layout.row_instruments,
+                    parent,
+                    false
             );
             holder = new ViewHolder();
-            holder.name = (TextView) view.findViewById(R.id.name);
-            holder.price = (TextView) view.findViewById(R.id.price);
-            holder.delete = (ImageView) view.findViewById(R.id.delete);
+            holder.name = (TextView) convertView.findViewById(R.id.name);
+            holder.price = (TextView) convertView.findViewById(R.id.price);
+            holder.delete = (ImageView) convertView.findViewById(R.id.delete);
             holder.delete.setOnClickListener(this);
-            view.setTag(holder);
+            convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) view.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
         // Get the data item for this position
@@ -68,7 +69,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
             holder.delete.setTag(R.id.positionTag, position);
         }
         // Return the completed view to render on screen
-        return view;
+        return convertView;
     }
 
     private void updatePriceBackground(TextView priceTV, String currentPriceStr) {
@@ -110,21 +111,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
                 .setMessage(res.getString(R.string.removeInstrumentDesc))
                 .setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Delete using query
-                        SQLite.delete(FavouriteInstruments.class)
-                                .where(FavouriteInstruments_Table.userId_id
-                                        .eq(Constants.CURRENT_USER_ID))
-                                .and(FavouriteInstruments_Table.instrumentId_id.eq(id))
-                                .async()
-                                .queryResultCallback(new QueryTransaction.QueryResultCallback<FavouriteInstruments>() {
-                                    @Override
-                                    public void onQueryResult(QueryTransaction<FavouriteInstruments> transaction, @NonNull CursorResult<FavouriteInstruments> tResult) {
-                                        remove(getItem(position));
-                                        notifyDataSetInvalidated();
-                                    }
-                                })
-                                .execute();
-                        dialog.dismiss();
+                        onDeleteClick(dialog, id, position);
                     }
                 })
                 .setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -134,6 +121,27 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    private void onDeleteClick(DialogInterface dialog, long id, final int position) {
+        // Delete using query
+        SQLite.delete(FavouriteInstruments.class)
+                .where(FavouriteInstruments_Table.userId_id
+                        .eq(Constants.CURRENT_USER_ID))
+                .and(FavouriteInstruments_Table.instrumentId_id.eq(id))
+                .async()
+                .queryResultCallback(
+                        new QueryTransaction.QueryResultCallback<FavouriteInstruments>() {
+                            @Override
+                            public void onQueryResult(
+                                    QueryTransaction<FavouriteInstruments> transaction,
+                                    @NonNull CursorResult<FavouriteInstruments> tResult) {
+                                remove(getItem(position));
+                                notifyDataSetChanged();
+                            }
+                        })
+                .execute();
+        dialog.dismiss();
     }
 
     public ArrayList<Instrument> getItems() {

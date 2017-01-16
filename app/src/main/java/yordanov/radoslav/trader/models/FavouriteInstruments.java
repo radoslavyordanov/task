@@ -5,9 +5,9 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import yordanov.radoslav.trader.AppDatabase;
+import yordanov.radoslav.trader.TraderDatabase;
 
-@Table(database = AppDatabase.class)
+@Table(database = TraderDatabase.class)
 public class FavouriteInstruments extends BaseModel {
     @PrimaryKey
     @ForeignKey(tableClass = User.class)

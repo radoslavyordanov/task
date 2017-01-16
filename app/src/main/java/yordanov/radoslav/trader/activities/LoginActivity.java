@@ -29,13 +29,13 @@ import yordanov.radoslav.trader.models.User_Table;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
-    private CheckBox mRememberMe;
+    private CheckBox mRememberMeCheckBox;
     private SharedPreferences mAppPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.activity_login);
 
         checkIfUserIsLogged();
 
@@ -62,13 +62,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mEmailEditText = (EditText) findViewById(R.id.emailEditText);
         mPasswordEditText = (EditText) findViewById(R.id.passwordEditText);
-        mRememberMe = (CheckBox) findViewById(R.id.rememberMe);
+        mRememberMeCheckBox = (CheckBox) findViewById(R.id.rememberMeCheckBox);
     }
 
     @Override
     public void onClick(View v) {
         validateUser();
-
     }
 
     private void validateUser() {
@@ -85,12 +84,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .async()
                 .queryResultCallback(new QueryTransaction.QueryResultCallback<User>() {
                     @Override
-                    public void onQueryResult(QueryTransaction<User> transaction, @NonNull CursorResult<User> tResult) {
+                    public void onQueryResult(QueryTransaction<User> transaction,
+                                              @NonNull CursorResult<User> tResult) {
                         // called when query returns on UI thread
                         List<User> users = tResult.toListClose();
                         if (users.size() == 1) {
                             Constants.CURRENT_USER_ID = users.get(0).getId();
-                            if (mRememberMe.isEnabled()) {
+                            if (mRememberMeCheckBox.isEnabled()) {
                                 mAppPreferences.edit().putLong(Constants.USER_ID_PREF,
                                         Constants.CURRENT_USER_ID).apply();
                                 mAppPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF,

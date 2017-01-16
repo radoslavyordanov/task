@@ -1,6 +1,7 @@
 package yordanov.radoslav.trader.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,25 +23,26 @@ public class AddInstrumentsAdapter extends ArrayAdapter<Instrument> implements
         super(context, 0, instruments);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
-        View view = convertView;
         // Check if an existing view is being reused, otherwise inflate the view
-        if (view == null) {
+        if (convertView == null) {
             LayoutInflater inflater =
                     (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(
-                    R.layout.add_instruments_row,
-                    null
+            convertView = inflater.inflate(
+                    R.layout.row_add_instruments,
+                    parent,
+                    false
             );
             holder = new ViewHolder();
-            holder.name = (TextView) view.findViewById(R.id.name);
-            holder.checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+            holder.name = (TextView) convertView.findViewById(R.id.name);
+            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
             holder.checkBox.setOnCheckedChangeListener(this);
-            view.setTag(holder);
+            convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) view.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
         // Get the data item for this position
@@ -52,7 +54,7 @@ public class AddInstrumentsAdapter extends ArrayAdapter<Instrument> implements
             holder.checkBox.setTag(instrument.getId());
         }
         // Return the completed view to render on screen
-        return view;
+        return convertView;
     }
 
     @Override

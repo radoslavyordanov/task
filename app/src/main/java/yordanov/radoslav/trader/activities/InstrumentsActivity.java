@@ -33,20 +33,23 @@ import yordanov.radoslav.trader.models.User;
 import yordanov.radoslav.trader.models.User_Table;
 
 public class InstrumentsActivity extends AppCompatActivity implements View.OnClickListener {
-    private InstrumentsAdapter mApdater;
+    private InstrumentsAdapter mAdapter;
     private RepeatingThread mRepeatingThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.instruments_activity);
+        setContentView(R.layout.activity_instruments);
 
-        initListView();
+        initViews();
 
         setTitle(getString(R.string.instruments));
+    }
+
+    private void initViews() {
+        initListView();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.bringToFront();
         fab.setOnClickListener(this);
     }
 
@@ -54,10 +57,10 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
         final ListView listView = (ListView) findViewById(R.id.instrumentsListView);
 
         List<Instrument> favouriteInstruments = getFavouriteInstruments();
-        mApdater = new InstrumentsAdapter(InstrumentsActivity.this,
+        mAdapter = new InstrumentsAdapter(InstrumentsActivity.this,
                 new ArrayList<>(favouriteInstruments));
         updateAllPrices();
-        listView.setAdapter(mApdater);
+        listView.setAdapter(mAdapter);
         if (favouriteInstruments.size() > 1) {
             mRepeatingThread = new RepeatingThread();
             Thread t = new Thread(new RepeatingThread());
@@ -87,9 +90,9 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void updateAllPrices() {
-        ArrayList<Instrument> items = mApdater.getItems();
+        ArrayList<Instrument> items = mAdapter.getItems();
 
-        for (int i = 0; i < mApdater.getCount(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             generateRandomPrice(items.get(i));
         }
     }
@@ -107,7 +110,7 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
      * subset of the user instruments.
      */
     private void updatePrices() {
-        ArrayList<Instrument> items = mApdater.getItems();
+        ArrayList<Instrument> items = mAdapter.getItems();
 
         if (items.size() == 0) {
             return;
@@ -122,7 +125,7 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
             int randomInstrumentPosition = listOfIntegers.get(i);
             generateRandomPrice(items.get(randomInstrumentPosition));
         }
-        mApdater.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     private int getSubsetOfInstruments(int maximum) {
@@ -181,14 +184,7 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
                 .setMessage(getString(R.string.logoutDesc))
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences appPreferences =
-                                PreferenceManager.getDefaultSharedPreferences(InstrumentsActivity.this);
-                        appPreferences.edit().putLong(Constants.USER_ID_PREF, -1).apply();
-                        appPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF, false).apply();
-                        Intent openLoginActivity = new Intent(InstrumentsActivity.this, LoginActivity.class);
-                        startActivity(openLoginActivity);
-                        finish();
-                        dialog.dismiss();
+                        onLogoutClick(dialog);
                     }
                 })
                 .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -198,6 +194,19 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    private void onLogoutClick(DialogInterface dialog) {
+        SharedPreferences appPreferences =
+                PreferenceManager.getDefaultSharedPreferences(
+                        InstrumentsActivity.this);
+        appPreferences.edit().putLong(Constants.USER_ID_PREF, -1).apply();
+        appPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF, false).apply();
+        Intent openLoginActivity = new Intent(InstrumentsActivity.this,
+                LoginActivity.class);
+        startActivity(openLoginActivity);
+        finish();
+        dialog.dismiss();
     }
 
     @Override
