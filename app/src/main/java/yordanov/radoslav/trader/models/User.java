@@ -4,6 +4,9 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
+import com.raizlabs.android.dbflow.sql.language.ConditionGroup;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.sql.queriable.AsyncQuery;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import yordanov.radoslav.trader.TraderDatabase;
@@ -38,5 +41,20 @@ public class User extends BaseModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static void insertUser(User user) {
+        user.save();
+    }
+
+    public static AsyncQuery<User> getUser(String email, String password) {
+        ConditionGroup conditionGroup = ConditionGroup.clause()
+                .and(User_Table.email.eq(email))
+                .and(User_Table.password.eq(password));
+
+        return SQLite.select()
+                .from(User.class)
+                .where(conditionGroup)
+                .async();
     }
 }

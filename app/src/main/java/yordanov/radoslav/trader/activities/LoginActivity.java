@@ -12,9 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.raizlabs.android.dbflow.sql.language.ConditionGroup;
 import com.raizlabs.android.dbflow.sql.language.CursorResult;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
 import java.util.List;
@@ -22,7 +20,6 @@ import java.util.List;
 import yordanov.radoslav.trader.Constants;
 import yordanov.radoslav.trader.R;
 import yordanov.radoslav.trader.models.User;
-import yordanov.radoslav.trader.models.User_Table;
 import yordanov.radoslav.trader.utils.SharedPreferencesUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -75,15 +72,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
-        ConditionGroup conditionGroup = ConditionGroup.clause()
-                .and(User_Table.email.eq(email))
-                .and(User_Table.password.eq(password));
-
-        SQLite.select()
-                .from(User.class)
-                .where(conditionGroup)
-                .async()
-                .queryResultCallback(new QueryTransaction.QueryResultCallback<User>() {
+        User.getUser(email, password).
+                queryResultCallback(new QueryTransaction.QueryResultCallback<User>() {
                     @Override
                     public void onQueryResult(QueryTransaction<User> transaction,
                                               @NonNull CursorResult<User> tResult) {
@@ -105,7 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             showInvalidCredentialsDialog();
                         }
                     }
-                }).execute();
+                })
+                .execute();
     }
 
     private void showInvalidCredentialsDialog() {

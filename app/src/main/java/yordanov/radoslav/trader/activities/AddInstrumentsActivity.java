@@ -8,8 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.raizlabs.android.dbflow.sql.language.CursorResult;
-import com.raizlabs.android.dbflow.sql.queriable.StringQuery;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
 import java.util.ArrayList;
@@ -19,9 +17,7 @@ import yordanov.radoslav.trader.Constants;
 import yordanov.radoslav.trader.R;
 import yordanov.radoslav.trader.adapters.AddInstrumentsAdapter;
 import yordanov.radoslav.trader.models.FavouriteInstruments;
-import yordanov.radoslav.trader.models.FavouriteInstruments_Table;
 import yordanov.radoslav.trader.models.Instrument;
-import yordanov.radoslav.trader.models.Instrument_Table;
 
 public class AddInstrumentsActivity extends AppCompatActivity {
 
@@ -38,29 +34,16 @@ public class AddInstrumentsActivity extends AppCompatActivity {
         setTitle(getString(R.string.addInstruments));
     }
 
-    @SuppressWarnings("unchecked")
     private void initListView() {
         final ListView listView = (ListView) findViewById(R.id.addInstrumentsListView);
 
-        StringQuery instrumentQuery = new StringQuery(
-                Instrument.class,
-                "SELECT " + Instrument_Table.name + ", " + Instrument_Table.id
-                        + "FROM " + Constants.INSTRUMENT_TABLE + " WHERE" + Instrument_Table.id +
-                        "NOT IN(" + "SELECT IFNULL(" + FavouriteInstruments_Table.instrumentId_id +
-                        ", '') FROM " + Constants.FAVOURITE_INSTRUMENTS_TABLE + " WHERE " +
-                        FavouriteInstruments_Table.userId_id +
-                        " = " + Constants.CURRENT_USER_ID + ")"
-        );
-
-        instrumentQuery
-                .async()
-                .queryResultCallback(new QueryTransaction.QueryResultCallback() {
+        Instrument.getMissingInstruments().queryListResultCallback(
+                new QueryTransaction.QueryResultListCallback<Instrument>() {
                     @Override
-                    public void onQueryResult(QueryTransaction transaction,
-                                              @NonNull CursorResult tResult) {
-                        List<Instrument> instrumentsList = tResult.toList();
+                    public void onListQueryResult(
+                            QueryTransaction transaction, @NonNull List<Instrument> tResult) {
                         mAdapter = new AddInstrumentsAdapter(AddInstrumentsActivity.this,
-                                new ArrayList<>(instrumentsList));
+                                new ArrayList<>(tResult));
                         listView.setAdapter(mAdapter);
                     }
                 })
@@ -89,7 +72,7 @@ public class AddInstrumentsActivity extends AppCompatActivity {
             FavouriteInstruments favouriteInstrument = new FavouriteInstruments();
             favouriteInstrument.setUserId(Constants.CURRENT_USER_ID);
             favouriteInstrument.setInstrumentId(selectedInstrumentIDs.get(i));
-            favouriteInstrument.save();
+            FavouriteInstruments.insertFavouriteInstrument(favouriteInstrument);
         }
 
         if (selectedInstrumentIDs.isEmpty()) {

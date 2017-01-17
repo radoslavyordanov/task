@@ -14,15 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.raizlabs.android.dbflow.sql.language.CursorResult;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
 import java.util.ArrayList;
 
-import yordanov.radoslav.trader.Constants;
 import yordanov.radoslav.trader.R;
 import yordanov.radoslav.trader.models.FavouriteInstruments;
-import yordanov.radoslav.trader.models.FavouriteInstruments_Table;
 import yordanov.radoslav.trader.models.Instrument;
 
 public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements
@@ -127,22 +124,18 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements
 
     private void onDeleteClick(DialogInterface dialog, long id, final int position) {
         // Delete using query
-        SQLite.delete(FavouriteInstruments.class)
-                .where(FavouriteInstruments_Table.userId_id
-                        .eq(Constants.CURRENT_USER_ID))
-                .and(FavouriteInstruments_Table.instrumentId_id.eq(id))
-                .async()
-                .queryResultCallback(
-                        new QueryTransaction.QueryResultCallback<FavouriteInstruments>() {
-                            @Override
-                            public void onQueryResult(
-                                    QueryTransaction<FavouriteInstruments> transaction,
-                                    @NonNull CursorResult<FavouriteInstruments> tResult) {
-                                remove(getItem(position));
-                                notifyDataSetChanged();
-                            }
-                        })
+        FavouriteInstruments.deleteFavouriteInstrument(id).queryResultCallback(
+                new QueryTransaction.QueryResultCallback<FavouriteInstruments>() {
+                    @Override
+                    public void onQueryResult(
+                            QueryTransaction<FavouriteInstruments> transaction,
+                            @NonNull CursorResult<FavouriteInstruments> tResult) {
+                        remove(getItem(position));
+                        notifyDataSetChanged();
+                    }
+                })
                 .execute();
+
         dialog.dismiss();
     }
 

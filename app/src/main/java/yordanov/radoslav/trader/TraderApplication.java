@@ -50,12 +50,12 @@ public class TraderApplication extends Application {
                             User user = new User();
                             user.setEmail("test@test.com");
                             user.setPassword("test");
-                            user.save();
+                            User.insertUser(user);
 
                             User user1 = new User();
                             user1.setEmail("admin@admin.com");
                             user1.setPassword("admin");
-                            user1.save();
+                            User.insertUser(user1);
                         }
                     }
                 }).execute();
@@ -91,7 +91,7 @@ public class TraderApplication extends Application {
                 instrument.setLowestPrice(instrumentsObject.getDouble("lowestPrice"));
                 instrument.setHighestPrice(instrumentsObject.getDouble("highestPrice"));
                 instrument.setDecimalNumbers(instrumentsObject.getInt("decimalNumbers"));
-                instrument.save();
+                Instrument.insertInstrument(instrument);
             }
         } catch (JSONException e) {
             // parse error

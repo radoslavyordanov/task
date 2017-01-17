@@ -3,6 +3,7 @@ package yordanov.radoslav.trader.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.raizlabs.android.dbflow.sql.language.NameAlias;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,14 +22,8 @@ import java.util.Random;
 
 import yordanov.radoslav.trader.Constants;
 import yordanov.radoslav.trader.R;
-import yordanov.radoslav.trader.utils.DBFlowUtils;
 import yordanov.radoslav.trader.adapters.InstrumentsAdapter;
-import yordanov.radoslav.trader.models.FavouriteInstruments;
-import yordanov.radoslav.trader.models.FavouriteInstruments_Table;
 import yordanov.radoslav.trader.models.Instrument;
-import yordanov.radoslav.trader.models.Instrument_Table;
-import yordanov.radoslav.trader.models.User;
-import yordanov.radoslav.trader.models.User_Table;
 import yordanov.radoslav.trader.utils.SharedPreferencesUtils;
 
 public class InstrumentsActivity extends AppCompatActivity implements
@@ -59,37 +53,22 @@ public class InstrumentsActivity extends AppCompatActivity implements
     private void initListView() {
         final ListView listView = (ListView) findViewById(R.id.instrumentsListView);
 
-        List<Instrument> favouriteInstruments = getFavouriteInstruments();
-        mAdapter = new InstrumentsAdapter(InstrumentsActivity.this,
-                new ArrayList<>(favouriteInstruments));
-        updateAllPrices();
-        listView.setAdapter(mAdapter);
-        if (favouriteInstruments.size() > 1) {
-            mRepeatingThread = new RepeatingThread();
-            Thread t = new Thread(new RepeatingThread());
-            t.start();
-        }
-
-    }
-
-    private List<Instrument> getFavouriteInstruments() {
-        NameAlias instrumentAlias = DBFlowUtils.getNameAliasForTable(Constants.INSTRUMENT_TABLE);
-        NameAlias userAlias = DBFlowUtils.getNameAliasForTable(Constants.USER_TABLE);
-
-        return SQLite.select(
-                Instrument_Table.name.withTable(instrumentAlias),
-                Instrument_Table.id.withTable(instrumentAlias),
-                Instrument_Table.lowestPrice.withTable(instrumentAlias),
-                Instrument_Table.highestPrice.withTable(instrumentAlias),
-                Instrument_Table.decimalNumbers.withTable(instrumentAlias)
-        )
-                .from(Instrument.class)
-                .innerJoin(FavouriteInstruments.class)
-                .on(Instrument_Table.id.withTable().eq(FavouriteInstruments_Table.instrumentId_id))
-                .innerJoin(User.class)
-                .on(User_Table.id.withTable().eq(FavouriteInstruments_Table.userId_id))
-                .where(User_Table.id.withTable(userAlias).eq(Constants.CURRENT_USER_ID))
-                .queryList();
+        Instrument.getFavouriteInstruments().queryListResultCallback(
+                new QueryTransaction.QueryResultListCallback<Instrument>() {
+                    @Override
+                    public void onListQueryResult(
+                            QueryTransaction transaction, @NonNull List<Instrument> tResult) {
+                        mAdapter = new InstrumentsAdapter(InstrumentsActivity.this,
+                                new ArrayList<>(tResult));
+                        updateAllPrices();
+                        listView.setAdapter(mAdapter);
+                        if (tResult.size() > 1) {
+                            mRepeatingThread = new RepeatingThread();
+                            Thread t = new Thread(new RepeatingThread());
+                            t.start();
+                        }
+                    }
+                }).execute();
     }
 
     private void updateAllPrices() {
