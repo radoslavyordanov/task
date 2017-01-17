@@ -124,7 +124,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements
 
     private void onDeleteClick(DialogInterface dialog, long id, final int position) {
         // Delete using query
-        FavouriteInstruments.deleteFavouriteInstrument(id).queryResultCallback(
+        FavouriteInstruments.deleteFavouriteInstrumentById(id).queryResultCallback(
                 new QueryTransaction.QueryResultCallback<FavouriteInstruments>() {
                     @Override
                     public void onQueryResult(

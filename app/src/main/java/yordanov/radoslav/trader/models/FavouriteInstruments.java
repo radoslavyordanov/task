@@ -40,7 +40,7 @@ public class FavouriteInstruments extends BaseModel {
         favouriteInstrument.save();
     }
 
-    public static AsyncQuery<FavouriteInstruments> deleteFavouriteInstrument(long id) {
+    public static AsyncQuery<FavouriteInstruments> deleteFavouriteInstrumentById(long id) {
         return SQLite.delete(FavouriteInstruments.class)
                 .where(FavouriteInstruments_Table.userId_id
                         .eq(Constants.CURRENT_USER_ID))
