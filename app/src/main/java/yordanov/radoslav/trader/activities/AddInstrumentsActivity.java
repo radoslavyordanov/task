@@ -24,11 +24,13 @@ import yordanov.radoslav.trader.models.Instrument;
 import yordanov.radoslav.trader.models.Instrument_Table;
 
 public class AddInstrumentsActivity extends AppCompatActivity {
+
     private AddInstrumentsAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_instruments);
 
         initListView();

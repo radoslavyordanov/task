@@ -17,6 +17,7 @@ import yordanov.radoslav.trader.models.Instrument;
 
 public class AddInstrumentsAdapter extends ArrayAdapter<Instrument> implements
         CompoundButton.OnCheckedChangeListener {
+
     private ArrayList<Long> mSelectedInstruments = new ArrayList<>();
 
     public AddInstrumentsAdapter(Context context, ArrayList<Instrument> instruments) {

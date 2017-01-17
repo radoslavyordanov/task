@@ -25,11 +25,14 @@ import yordanov.radoslav.trader.models.FavouriteInstruments;
 import yordanov.radoslav.trader.models.FavouriteInstruments_Table;
 import yordanov.radoslav.trader.models.Instrument;
 
-public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View.OnClickListener {
+public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements
+        View.OnClickListener {
+
     private ArrayList<Instrument> mItems = new ArrayList<>();
 
     public InstrumentsAdapter(Context context, ArrayList<Instrument> instruments) {
         super(context, 0, instruments);
+
         mItems = instruments;
     }
 
@@ -75,6 +78,7 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements View
     private void updatePriceBackground(TextView priceTV, String currentPriceStr) {
         double oldPrice;
         double currentPrice;
+
         try {
             oldPrice = Double.parseDouble(priceTV.getText().toString());
             currentPrice = Double.parseDouble(currentPriceStr);

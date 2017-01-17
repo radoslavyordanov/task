@@ -21,6 +21,7 @@ import yordanov.radoslav.trader.models.Instrument;
 import yordanov.radoslav.trader.models.User;
 
 public class TraderApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();

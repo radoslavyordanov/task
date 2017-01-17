@@ -3,6 +3,7 @@ package yordanov.radoslav.trader;
 import com.raizlabs.android.dbflow.sql.language.NameAlias;
 
 public class Utils {
+
     private Utils() {
 
     }

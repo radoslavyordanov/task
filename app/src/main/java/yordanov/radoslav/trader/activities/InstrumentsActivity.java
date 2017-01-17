@@ -33,13 +33,16 @@ import yordanov.radoslav.trader.models.Instrument_Table;
 import yordanov.radoslav.trader.models.User;
 import yordanov.radoslav.trader.models.User_Table;
 
-public class InstrumentsActivity extends AppCompatActivity implements View.OnClickListener {
+public class InstrumentsActivity extends AppCompatActivity implements
+        View.OnClickListener {
+
     private InstrumentsAdapter mAdapter;
     private RepeatingThread mRepeatingThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_instruments);
 
         initViews();
@@ -152,7 +155,7 @@ public class InstrumentsActivity extends AppCompatActivity implements View.OnCli
         SharedPreferences appPreferences =
                 PreferenceManager.getDefaultSharedPreferences(
                         InstrumentsActivity.this);
-        appPreferences.edit().putLong(Constants.USER_ID_PREF, -1).apply();
+        appPreferences.edit().putLong(Constants.USER_ID_PREF, Constants.NO_USER).apply();
         appPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF, false).apply();
         Intent openLoginActivity = new Intent(InstrumentsActivity.this,
                 LoginActivity.class);

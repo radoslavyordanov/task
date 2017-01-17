@@ -27,6 +27,7 @@ import yordanov.radoslav.trader.models.User;
 import yordanov.radoslav.trader.models.User_Table;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private CheckBox mRememberMeCheckBox;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         checkIfUserIsLogged();
@@ -46,9 +48,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void checkIfUserIsLogged() {
         mAppPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-        long userId = mAppPreferences.getLong(Constants.USER_ID_PREF, -1);
+        long userId = mAppPreferences.getLong(Constants.USER_ID_PREF, Constants.NO_USER);
         boolean rememberMe = mAppPreferences.getBoolean(Constants.REMEMBER_ME_PREF, false);
-        if (userId != -1 && rememberMe) {
+        if (userId != Constants.NO_USER && rememberMe) {
             Constants.CURRENT_USER_ID = userId;
             Intent intent = new Intent(LoginActivity.this, InstrumentsActivity.class);
             startActivity(intent);
