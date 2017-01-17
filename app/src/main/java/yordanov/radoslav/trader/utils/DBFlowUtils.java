@@ -1,10 +1,10 @@
-package yordanov.radoslav.trader;
+package yordanov.radoslav.trader.utils;
 
 import com.raizlabs.android.dbflow.sql.language.NameAlias;
 
-public class Utils {
+public class DBFlowUtils {
 
-    private Utils() {
+    private DBFlowUtils() {
 
     }
 

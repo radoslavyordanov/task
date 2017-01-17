@@ -2,9 +2,7 @@ package yordanov.radoslav.trader.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,13 +23,13 @@ import yordanov.radoslav.trader.Constants;
 import yordanov.radoslav.trader.R;
 import yordanov.radoslav.trader.models.User;
 import yordanov.radoslav.trader.models.User_Table;
+import yordanov.radoslav.trader.utils.SharedPreferencesUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private CheckBox mRememberMeCheckBox;
-    private SharedPreferences mAppPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +45,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void checkIfUserIsLogged() {
-        mAppPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-        long userId = mAppPreferences.getLong(Constants.USER_ID_PREF, Constants.NO_USER);
-        boolean rememberMe = mAppPreferences.getBoolean(Constants.REMEMBER_ME_PREF, false);
+        long userId = SharedPreferencesUtils.getLongData(
+                this, Constants.USER_ID_PREF, Constants.NO_USER);
+        boolean rememberMe = SharedPreferencesUtils.getBooleanData(
+                this, Constants.REMEMBER_ME_PREF, false);
         if (userId != Constants.NO_USER && rememberMe) {
             Constants.CURRENT_USER_ID = userId;
             Intent intent = new Intent(LoginActivity.this, InstrumentsActivity.class);
@@ -93,10 +92,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (users.size() == 1) {
                             Constants.CURRENT_USER_ID = users.get(0).getId();
                             if (mRememberMeCheckBox.isChecked()) {
-                                mAppPreferences.edit().putLong(Constants.USER_ID_PREF,
-                                        Constants.CURRENT_USER_ID).apply();
-                                mAppPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF,
-                                        true).apply();
+                                SharedPreferencesUtils.setLongData(LoginActivity.this,
+                                        Constants.USER_ID_PREF, Constants.CURRENT_USER_ID);
+                                SharedPreferencesUtils.setBooleanData(LoginActivity.this,
+                                        Constants.REMEMBER_ME_PREF, true);
                             }
                             Intent intent = new Intent(LoginActivity.this,
                                     InstrumentsActivity.class);

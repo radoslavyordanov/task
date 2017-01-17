@@ -2,9 +2,7 @@ package yordanov.radoslav.trader.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +22,7 @@ import java.util.Random;
 
 import yordanov.radoslav.trader.Constants;
 import yordanov.radoslav.trader.R;
-import yordanov.radoslav.trader.Utils;
+import yordanov.radoslav.trader.utils.DBFlowUtils;
 import yordanov.radoslav.trader.adapters.InstrumentsAdapter;
 import yordanov.radoslav.trader.models.FavouriteInstruments;
 import yordanov.radoslav.trader.models.FavouriteInstruments_Table;
@@ -32,6 +30,7 @@ import yordanov.radoslav.trader.models.Instrument;
 import yordanov.radoslav.trader.models.Instrument_Table;
 import yordanov.radoslav.trader.models.User;
 import yordanov.radoslav.trader.models.User_Table;
+import yordanov.radoslav.trader.utils.SharedPreferencesUtils;
 
 public class InstrumentsActivity extends AppCompatActivity implements
         View.OnClickListener {
@@ -74,8 +73,8 @@ public class InstrumentsActivity extends AppCompatActivity implements
     }
 
     private List<Instrument> getFavouriteInstruments() {
-        NameAlias instrumentAlias = Utils.getNameAliasForTable(Constants.INSTRUMENT_TABLE);
-        NameAlias userAlias = Utils.getNameAliasForTable(Constants.USER_TABLE);
+        NameAlias instrumentAlias = DBFlowUtils.getNameAliasForTable(Constants.INSTRUMENT_TABLE);
+        NameAlias userAlias = DBFlowUtils.getNameAliasForTable(Constants.USER_TABLE);
 
         return SQLite.select(
                 Instrument_Table.name.withTable(instrumentAlias),
@@ -152,11 +151,8 @@ public class InstrumentsActivity extends AppCompatActivity implements
     }
 
     private void onLogoutClick(DialogInterface dialog) {
-        SharedPreferences appPreferences =
-                PreferenceManager.getDefaultSharedPreferences(
-                        InstrumentsActivity.this);
-        appPreferences.edit().putLong(Constants.USER_ID_PREF, Constants.NO_USER).apply();
-        appPreferences.edit().putBoolean(Constants.REMEMBER_ME_PREF, false).apply();
+        SharedPreferencesUtils.setLongData(this, Constants.USER_ID_PREF, Constants.NO_USER);
+        SharedPreferencesUtils.setBooleanData(this, Constants.REMEMBER_ME_PREF, false);
         Intent openLoginActivity = new Intent(InstrumentsActivity.this,
                 LoginActivity.class);
         startActivity(openLoginActivity);

@@ -11,7 +11,7 @@ public class Constants {
 
     public static long CURRENT_USER_ID;
 
-    public static int NO_USER = -1;
+    public static long NO_USER = -1;
 
     public static final String FAVOURITE_INSTRUMENTS_TABLE = FavouriteInstruments.class.getSimpleName();
     public static final String INSTRUMENT_TABLE = Instrument.class.getSimpleName();
