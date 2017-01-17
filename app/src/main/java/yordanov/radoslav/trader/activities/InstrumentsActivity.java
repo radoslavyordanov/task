@@ -62,7 +62,7 @@ public class InstrumentsActivity extends AppCompatActivity implements
                                 new ArrayList<>(tResult));
                         updateAllPrices();
                         listView.setAdapter(mAdapter);
-                        if (tResult.size() > 1) {
+                        if (tResult.size() > 0) {
                             mRepeatingThread = new RepeatingThread();
                             Thread t = new Thread(new RepeatingThread());
                             t.start();
@@ -75,11 +75,12 @@ public class InstrumentsActivity extends AppCompatActivity implements
         ArrayList<Instrument> items = mAdapter.getItems();
 
         for (int i = 0; i < items.size(); i++) {
-            generateRandomPrice(items.get(i));
+            String randomPriceFormatted = generateRandomPrice(items.get(i));
+            setInstrumentPrice(mAdapter.getItem(i), randomPriceFormatted);
         }
     }
 
-    private void generateRandomPrice(Instrument instrument) {
+    private String generateRandomPrice(Instrument instrument) {
         double minimum = instrument.getLowestPrice();
         double maximum = instrument.getHighestPrice();
 
@@ -87,11 +88,45 @@ public class InstrumentsActivity extends AppCompatActivity implements
         double randomPrice = minimum + (maximum - minimum) * r.nextDouble();
         int decimalNumbers = instrument.getDecimalNumbers();
 
-        instrument.setCurrentPrice(priceFormatter(decimalNumbers, randomPrice));
+        return priceFormatter(decimalNumbers, randomPrice);
     }
 
     private String priceFormatter(int decimalNumbers, double randomPrice) {
         return String.format("%." + decimalNumbers + "f", randomPrice);
+    }
+
+    private void setInstrumentPrice(Instrument instrument, String randomPriceFormatted) {
+        if (instrument != null) {
+            instrument.setCurrentPrice(randomPriceFormatted);
+        }
+    }
+
+    private void setInstrumentColorsToGrey() {
+        ArrayList<Integer> priceColors = mAdapter.getPriceColors();
+        for (int i = 0; i < priceColors.size(); i++) {
+            priceColors.set(i, R.drawable.rounded_bg_grey);
+        }
+    }
+
+    private void setInstrumentColor(int position, String randomPriceFormatted) {
+        Instrument instrument = mAdapter.getItem(position);
+
+        double oldPrice;
+        double currentPrice = Double.parseDouble(randomPriceFormatted);
+
+        if (instrument != null && instrument.getCurrentPrice() != null) {
+            oldPrice = Double.parseDouble(instrument.getCurrentPrice());
+        } else {
+            oldPrice = 0;
+        }
+
+        if (oldPrice == 0 || oldPrice == currentPrice) {
+            mAdapter.getPriceColors().set(position, R.drawable.rounded_bg_grey);
+        } else if (currentPrice > oldPrice) {
+            mAdapter.getPriceColors().set(position, R.drawable.rounded_bg_green);
+        } else {
+            mAdapter.getPriceColors().set(position, R.drawable.rounded_bg_red);
+        }
     }
 
     @Override
@@ -187,9 +222,18 @@ public class InstrumentsActivity extends AppCompatActivity implements
             ArrayList<Integer> listOfIntegers = generateListOfIntegers(items.size());
             Collections.shuffle(listOfIntegers);
 
+            setInstrumentColorsToGrey();
+
             for (int i = 0; i < subsetOfInstruments; i++) {
                 int randomInstrumentPosition = listOfIntegers.get(i);
-                generateRandomPrice(items.get(randomInstrumentPosition));
+
+                String randomPriceFormatted = generateRandomPrice(
+                        items.get(randomInstrumentPosition));
+
+                setInstrumentColor(randomInstrumentPosition, randomPriceFormatted);
+
+                setInstrumentPrice(mAdapter.getItem(
+                        randomInstrumentPosition), randomPriceFormatted);
             }
             mAdapter.notifyDataSetChanged();
         }

@@ -26,11 +26,24 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements
         View.OnClickListener {
 
     private ArrayList<Instrument> mItems = new ArrayList<>();
+    private ArrayList<Integer> mPriceColors = new ArrayList<>();
 
     public InstrumentsAdapter(Context context, ArrayList<Instrument> instruments) {
         super(context, 0, instruments);
 
         mItems = instruments;
+
+        initPriceColors(getCount());
+    }
+
+    private void initPriceColors(int size) {
+        for (int i = 0; i < size; i++) {
+            mPriceColors.add(R.drawable.rounded_bg_grey);
+        }
+    }
+
+    public ArrayList<Integer> getPriceColors() {
+        return mPriceColors;
     }
 
     @NonNull
@@ -63,37 +76,16 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements
         if (instrument != null) {
             holder.name.setText(instrument.getName());
 
-            updatePriceBackground(holder.price, instrument.getCurrentPrice());
+            holder.price.setText(instrument.getCurrentPrice());
+
+            holder.price.setBackground(
+                    ContextCompat.getDrawable(getContext(), mPriceColors.get(position)));
 
             holder.delete.setTag(R.id.instrumentIdTag, instrument.getId());
             holder.delete.setTag(R.id.positionTag, position);
         }
         // Return the completed view to render on screen
         return convertView;
-    }
-
-    private void updatePriceBackground(TextView priceTV, String currentPriceStr) {
-        double oldPrice;
-        double currentPrice;
-
-        try {
-            oldPrice = Double.parseDouble(priceTV.getText().toString());
-            currentPrice = Double.parseDouble(currentPriceStr);
-        } catch (NumberFormatException e) {
-            return;
-        }
-
-        if (oldPrice == 0 || oldPrice == currentPrice) {
-            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
-                    R.drawable.rounded_bg_grey));
-        } else if (currentPrice > oldPrice) {
-            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
-                    R.drawable.rounded_bg_green));
-        } else {
-            priceTV.setBackground(ContextCompat.getDrawable(getContext(),
-                    R.drawable.rounded_bg_red));
-        }
-        priceTV.setText(currentPriceStr);
     }
 
     @Override
@@ -130,7 +122,8 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> implements
                     public void onQueryResult(
                             QueryTransaction<FavouriteInstruments> transaction,
                             @NonNull CursorResult<FavouriteInstruments> tResult) {
-                        remove(getItem(position));
+                        mItems.remove(getItem(position));
+                        mPriceColors.remove(position);
                         notifyDataSetChanged();
                     }
                 })
