@@ -15,6 +15,7 @@ import yordanov.radoslav.trader.utils.DBFlowUtils;
 
 @Table(database = TraderDatabase.class)
 public class Instrument extends BaseModel {
+
     @PrimaryKey(autoincrement = true)
     long id; // package-private recommended, not required
 

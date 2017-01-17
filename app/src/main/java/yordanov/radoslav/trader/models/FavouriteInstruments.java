@@ -12,6 +12,7 @@ import yordanov.radoslav.trader.TraderDatabase;
 
 @Table(database = TraderDatabase.class)
 public class FavouriteInstruments extends BaseModel {
+
     @PrimaryKey
     @ForeignKey(tableClass = User.class)
     long userId;

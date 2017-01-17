@@ -13,6 +13,7 @@ import yordanov.radoslav.trader.TraderDatabase;
 
 @Table(database = TraderDatabase.class)
 public class User extends BaseModel {
+
     @PrimaryKey(autoincrement = true)
     long id; // package-private recommended, not required
 
